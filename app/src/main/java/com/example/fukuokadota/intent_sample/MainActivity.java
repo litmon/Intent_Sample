@@ -1,6 +1,7 @@
 package com.example.fukuokadota.intent_sample;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -47,7 +48,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+        // video quality 0: lower, 1: higher
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+        // video duration limit in second
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+        // video capture orientation value ActivityInfo.SCREEN_ORIENTATION_***(landscape, portrait)
+        intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         startActivityForResult(intent, REQUEST_CODE_VIDEO_CAPTURE);
     }
 
