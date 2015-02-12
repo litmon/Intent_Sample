@@ -1,6 +1,7 @@
 package com.example.fukuokadota.intent_sample;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -32,12 +33,19 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void imageCapture(View v) {
+        if(videoView.isPlaying()){
+            videoView.pause();
+        }
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, REQUEST_CODE_IMAGE_CAPTURE);
     }
 
     public void videoCapture(View v) {
+        if(videoView.isPlaying()){
+            videoView.pause();
+        }
+
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, REQUEST_CODE_VIDEO_CAPTURE);
@@ -48,13 +56,8 @@ public class MainActivity extends ActionBarActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_IMAGE_CAPTURE:
-                    System.out.println(uri);
-
-                    uri = data.getData();
-
-                    System.out.println(uri);
-
-                    imageView.setImageURI(uri);
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    imageView.setImageBitmap(photo);
 
                     break;
                 case REQUEST_CODE_VIDEO_CAPTURE:
