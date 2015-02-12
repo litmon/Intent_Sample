@@ -61,11 +61,7 @@ public class MainActivity extends ActionBarActivity {
 
                     break;
                 case REQUEST_CODE_VIDEO_CAPTURE:
-                    System.out.println(uri);
-
                     uri = data.getData();
-
-                    System.out.println(uri);
 
                     videoView.setVideoURI(uri);
                     videoView.start();
